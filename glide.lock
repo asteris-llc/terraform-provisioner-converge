@@ -1,0 +1,136 @@
+hash: 3b7a12000c3cd644bcb567b58310b1edaa1ef49ee2bde644f6f5a59fe92f3a69
+updated: 2016-09-06T15:49:35.895196749-05:00
+imports:
+- name: github.com/apparentlymart/go-cidr
+  version: a3ebdb999b831ecb6ab8a226e31b07b2b9061c47
+  subpackages:
+  - cidr
+- name: github.com/aws/aws-sdk-go
+  version: 565027b24171359f23f883d0fc48c228cdde301d
+  subpackages:
+  - aws
+  - aws/awserr
+  - aws/awsutil
+  - aws/client
+  - aws/client/metadata
+  - aws/corehandlers
+  - aws/credentials
+  - aws/credentials/ec2rolecreds
+  - aws/credentials/endpointcreds
+  - aws/defaults
+  - aws/ec2metadata
+  - aws/request
+  - aws/session
+  - aws/signer/v4
+  - private/endpoints
+  - private/protocol
+  - private/protocol/query
+  - private/protocol/query/queryutil
+  - private/protocol/rest
+  - private/protocol/restxml
+  - private/protocol/xml/xmlutil
+  - private/waiter
+  - service/s3
+- name: github.com/bgentry/go-netrc
+  version: 9fd32a8b3d3d3f9d43c341bfe098430e07609480
+  subpackages:
+  - netrc
+- name: github.com/dylanmei/iso8601
+  version: 2075bf119b58e5576c6ed9f867b8f3d17f2e54d4
+- name: github.com/dylanmei/winrmtest
+  version: 025617847eb2cf9bd1d851bc3b22ed28e6245ce5
+- name: github.com/go-ini/ini
+  version: 6e4869b434bd001f6983749881c7ead3545887d8
+- name: github.com/hashicorp/errwrap
+  version: 7554cd9344cec97297fa6649b055a8c98c2a1e55
+- name: github.com/hashicorp/go-getter
+  version: 0eb633db32e432fabba9eca8fa21192fab2b96be
+  subpackages:
+  - helper/url
+- name: github.com/hashicorp/go-multierror
+  version: 8c5f0ad9360406a3807ce7de6bc73269a91a6e51
+- name: github.com/hashicorp/go-plugin
+  version: 8cf118f7a2f0c7ef1c82f66d4f6ac77c7e27dc12
+- name: github.com/hashicorp/go-uuid
+  version: 64130c7a86d732268a38cb04cfbaf0cc987fda98
+- name: github.com/hashicorp/go-version
+  version: deeb027c13a95d56c7585df3fe29207208c6706e
+- name: github.com/hashicorp/hcl
+  version: 99df0eb941dd8ddbc83d3f3605a34f6a686ac85e
+  subpackages:
+  - hcl/ast
+  - hcl/parser
+  - hcl/scanner
+  - hcl/strconv
+  - hcl/token
+  - json/parser
+  - json/scanner
+  - json/token
+- name: github.com/hashicorp/hil
+  version: 9b187c1c33c99adcaa09fad1ef410961be96f280
+  subpackages:
+  - ast
+- name: github.com/hashicorp/terraform
+  version: e822a79165dbc06bbf8271ee349fe256867d53dc
+  subpackages:
+  - communicator
+  - communicator/remote
+  - communicator/ssh
+  - communicator/winrm
+  - config
+  - config/module
+  - dag
+  - dot
+  - flatmap
+  - helper/hilmapstructure
+  - helper/pathorcontents
+  - plugin
+  - terraform
+- name: github.com/hashicorp/yamux
+  version: d1caa6c97c9fc1cc9e83bbe34d0603f9ff0ce8bd
+- name: github.com/jmespath/go-jmespath
+  version: bd40a432e4c76585ef6b72d3fd96fb9b6dc7b68d
+- name: github.com/masterzen/simplexml
+  version: 4572e39b1ab9fe03ee513ce6fc7e289e98482190
+  subpackages:
+  - dom
+- name: github.com/masterzen/winrm
+  version: 54ea5d01478cfc2afccec1504bd0dfcd8c260cfa
+  subpackages:
+  - soap
+  - winrm
+- name: github.com/masterzen/xmlpath
+  version: 13f4951698adc0fa9c1dda3e275d489a24201161
+- name: github.com/mitchellh/copystructure
+  version: 6871c41ca9148d368715dedcda473f396f205df5
+- name: github.com/mitchellh/go-homedir
+  version: 756f7b183b7ab78acdbbee5c7f392838ed459dda
+- name: github.com/mitchellh/go-linereader
+  version: 07bab5fdd9580500aea6ada0e09df4aa28e68abd
+- name: github.com/mitchellh/mapstructure
+  version: ca63d7c062ee3c9f34db231e352b60012b4fd0c1
+- name: github.com/mitchellh/packer
+  version: 42144640658ded0e55be62984642750ffc4978db
+  subpackages:
+  - common/uuid
+- name: github.com/mitchellh/reflectwalk
+  version: eecf4c70c626c7cfbb95c90195bc34d386c74ac6
+- name: github.com/nu7hatch/gouuid
+  version: 179d4d0c4d8d407a32af483c2354df1d2c91e6c3
+- name: github.com/packer-community/winrmcp
+  version: 3d184cea22ee1c41ec1697e0d830ff0c78f7ea97
+  subpackages:
+  - winrmcp
+- name: github.com/satori/go.uuid
+  version: 0aa62d5ddceb50dbcb909d790b5345affd3669b6
+- name: github.com/xanzy/ssh-agent
+  version: ba9c9e33906f58169366275e3450db66139a31a9
+- name: golang.org/x/crypto
+  version: 9e590154d2353f3f5e1b24da7275686040dcf491
+  subpackages:
+  - curve25519
+  - ed25519
+  - ed25519/internal/edwards25519
+  - ssh
+  - ssh/agent
+testImports: []

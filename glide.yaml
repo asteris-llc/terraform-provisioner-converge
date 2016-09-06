@@ -1,0 +1,11 @@
+package: github.com/asteris-llc/terraform-provisioner-converge
+import:
+- package: github.com/hashicorp/go-plugin
+- package: github.com/hashicorp/terraform/terraform
+  version: v0.7.0
+- package: github.com/packer-community/winrmcp
+  version: 3d184cea22ee1c41ec1697e0d830ff0c78f7ea97
+- package: github.com/masterzen/winrm
+  version: 54ea5d01478cfc2afccec1504bd0dfcd8c260cfa
+- package: github.com/aws/aws-sdk-go
+  version: v1.2.7
