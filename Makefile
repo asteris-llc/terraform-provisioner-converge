@@ -30,9 +30,9 @@ xcompile:
 	@mkdir -p build
 	gox \
 		-os="darwin" \
+		-os="linux" \
 		-output="build/$(BINARY)_$(VERSION)_{{.OS}}_{{.Arch}}/$(BINARY)-{{.Dir}}" $$(glide nv)
 #		-os="freebsd" \
-#		-os="linux" \
 #		-os="windows" \
 
 package: xcompile 

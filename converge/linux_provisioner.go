@@ -29,7 +29,6 @@ func (p *Provisioner) installConvergeBinary(
 		prefix += fmt.Sprintf("no_proxy='%s' ", strings.Join(p.NOProxy, ","))
 	}
 
-	// First download the install.sh script from Chef
 	err := p.runCommand(o, comm, fmt.Sprintf("%scurl -L -o %s/converge %s", prefix, binaryPath, installURL))
 	if err != nil {
 		return err
