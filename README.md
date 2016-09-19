@@ -21,9 +21,9 @@ resource "aws_instance" "web" {
 This is not the default message
 EOF
     }
-    modules = [
-      "http://some.webserver.com/converge/app.app",
-      "http://some.other.webserver.org/converge/otherapp.app"
+    hcl = [
+      "http://some.webserver.com/converge/app.hcl",
+      "http://some.other.webserver.org/converge/otherapp.hcl"
     ]
     download_binary = true
     prevent_sudo = false

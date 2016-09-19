@@ -24,7 +24,7 @@ type Provisioner struct {
 	Local     bool              `mapstructure:"local"`
 	LocalAddr string            `mapstructure:"local_addr"`
 	LogLevel  string            `mapstructure:"log_level"`
-	Modules   []string          `mapstructure:"modules"`
+	Hcl       []string          `mapstructure:"hcl"`
 	NoToken   bool              `mapstructure:"no_token"`
 	Params    map[string]string `mapstructure:"params"`
 	RpcAddr   string            `mapstructure:"rpc_addr"`
@@ -90,7 +90,7 @@ func (r *ResourceProvisioner) Validate(c *terraform.ResourceConfig) (ws []string
 		return ws, es
 	}
 
-	if len(p.Modules) == 0 {
+	if len(p.Hcl) == 0 {
 		es = append(es, fmt.Errorf("No modules selected"))
 	}
 
@@ -240,13 +240,13 @@ func (p *Provisioner) buildCommandLine() string {
 			cmd.WriteString(fmt.Sprintf(" --key-file='%s'", p.KeyFile))
 		}
 	}
-	
+
 	for k, v := range p.Params {
 		cmd.WriteString(fmt.Sprintf(" -p %s=%s", k, strconv.Quote(v)))
 	}
 
 	cmd.WriteString(" ")
-	cmd.WriteString(strings.Join(p.Modules, " "))
+	cmd.WriteString(strings.Join(p.Hcl, " "))
 
 	return cmd.String()
 }

@@ -62,9 +62,8 @@ func TestBuildCommandLine(t *testing.T) {
 	p.UseSsl = false
 
 	// Params
-	p.Params = map[string]string{ "test": "tset" }
+	p.Params = map[string]string{"test": "tset"}
 	cmd = p.buildCommandLine()
 	assert.Equal(t, test_makeCommand("--local -p test=\"tset\""), cmd)
 	p.Params = nil
 }
-
