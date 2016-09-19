@@ -9,23 +9,34 @@ import (
 	"strings"
 	"time"
 
-	"github.com/hashicorp/terraform/terraform"
 	"github.com/hashicorp/terraform/communicator"
 	"github.com/hashicorp/terraform/communicator/remote"
-	"github.com/mitchellh/mapstructure"
+	"github.com/hashicorp/terraform/terraform"
 	"github.com/mitchellh/go-linereader"
+	"github.com/mitchellh/mapstructure"
 )
 
 type Provisioner struct {
-	Download bool              `mapstructure:"download_binary"`
-	Params   map[string]string `mapstructure:"params"`
-	Modules  []string          `mapstructure:"modules"`
-	HTTPProxy  string   `mapstructure:"http_proxy"`
-	HTTPSProxy string   `mapstructure:"https_proxy"`
-	NOProxy    []string `mapstructure:"no_proxy"`
-	PreventSudo bool `mapstructure:"prevent_sudo"`
+	Download  bool              `mapstructure:"download_binary"`
+	CaFile    string            `mapstructure:"ca_file"`
+	CertFile  string            `mapstructure:"cert_file"`
+	KeyFile   string            `mapstructure:"key_file"`
+	Local     bool              `mapstructure:"local"`
+	LocalAddr string            `mapstructure:"local_addr"`
+	LogLevel  string            `mapstructure:"log_level"`
+	Modules   []string          `mapstructure:"modules"`
+	NoToken   bool              `mapstructure:"no_token"`
+	Params    map[string]string `mapstructure:"params"`
+	RpcAddr   string            `mapstructure:"rpc_addr"`
+	RpcToken  string            `mapstructure:"rpc_token"`
+	UseSsl    bool              `mapstructure:"use_ssl"`
 
-	useSudo	bool
+	HTTPProxy   string   `mapstructure:"http_proxy"`
+	HTTPSProxy  string   `mapstructure:"https_proxy"`
+	NOProxy     []string `mapstructure:"no_proxy"`
+	PreventSudo bool     `mapstructure:"prevent_sudo"`
+
+	useSudo bool
 }
 
 type ResourceProvisioner struct{}
@@ -191,17 +202,51 @@ func (p *Provisioner) copyOutput(o terraform.UIOutput, r io.Reader, doneCh chan<
 }
 
 func (p *Provisioner) runConverge(o terraform.UIOutput, comm communicator.Communicator) error {
-	params := new(bytes.Buffer)
-	for k, v := range p.Params {
-		params.WriteString(fmt.Sprintf(" -p %s=%s", k, strconv.Quote(v)))
-	}
-
-	cmd := fmt.Sprintf("%s/converge apply --local %s %s", 
-		binaryPath,
-		params.String(),
-		strings.Join(p.Modules, " "),
-		)
-
+	cmd := p.buildCommandLine()
 
 	return p.runCommand(o, comm, cmd)
+}
+
+func (p *Provisioner) buildCommandLine() string {
+	cmd := bytes.NewBufferString(fmt.Sprintf("%s/converge apply", binaryPath))
+
+	// An RPC address takes precedence over a local address
+	if p.RpcAddr != "" {
+		cmd.WriteString(fmt.Sprintf(" --rpc-addr='%s'", p.RpcAddr))
+	} else {
+		cmd.WriteString(" --local")
+		if p.LocalAddr != "" {
+			cmd.WriteString(fmt.Sprintf(" --local-addr='%s'", p.LocalAddr))
+		}
+	}
+
+	if p.NoToken {
+		cmd.WriteString(" --no-token")
+	}
+
+	if p.RpcToken != "" {
+		cmd.WriteString(fmt.Sprintf(" --rpc-token='%s'", p.RpcToken))
+	}
+
+	if p.UseSsl {
+		cmd.WriteString(" --use-ssl")
+		if p.CaFile != "" {
+			cmd.WriteString(fmt.Sprintf(" --ca-file='%s'", p.CaFile))
+		}
+		if p.CertFile != "" {
+			cmd.WriteString(fmt.Sprintf(" --cert-file='%s'", p.CertFile))
+		}
+		if p.KeyFile != "" {
+			cmd.WriteString(fmt.Sprintf(" --key-file='%s'", p.KeyFile))
+		}
+	}
+	
+	for k, v := range p.Params {
+		cmd.WriteString(fmt.Sprintf(" -p %s=%s", k, strconv.Quote(v)))
+	}
+
+	cmd.WriteString(" ")
+	cmd.WriteString(strings.Join(p.Modules, " "))
+
+	return cmd.String()
 }
