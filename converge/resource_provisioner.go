@@ -2,10 +2,10 @@ package converge
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"io"
 	"log"
-	"strconv"
 	"strings"
 	"time"
 
@@ -17,19 +17,19 @@ import (
 )
 
 type Provisioner struct {
-	Download  bool              `mapstructure:"download_binary"`
-	CaFile    string            `mapstructure:"ca_file"`
-	CertFile  string            `mapstructure:"cert_file"`
-	KeyFile   string            `mapstructure:"key_file"`
-	Local     bool              `mapstructure:"local"`
-	LocalAddr string            `mapstructure:"local_addr"`
-	LogLevel  string            `mapstructure:"log_level"`
-	Hcl       []string          `mapstructure:"hcl"`
-	NoToken   bool              `mapstructure:"no_token"`
-	Params    map[string]string `mapstructure:"params"`
-	RpcAddr   string            `mapstructure:"rpc_addr"`
-	RpcToken  string            `mapstructure:"rpc_token"`
-	UseSsl    bool              `mapstructure:"use_ssl"`
+	Download  bool                   `mapstructure:"download_binary"`
+	CaFile    string                 `mapstructure:"ca_file"`
+	CertFile  string                 `mapstructure:"cert_file"`
+	KeyFile   string                 `mapstructure:"key_file"`
+	Local     bool                   `mapstructure:"local"`
+	LocalAddr string                 `mapstructure:"local_addr"`
+	LogLevel  string                 `mapstructure:"log_level"`
+	Hcl       []string               `mapstructure:"hcl"`
+	NoToken   bool                   `mapstructure:"no_token"`
+	Params    map[string]interface{} `mapstructure:"params"`
+	RpcAddr   string                 `mapstructure:"rpc_addr"`
+	RpcToken  string                 `mapstructure:"rpc_token"`
+	UseSsl    bool                   `mapstructure:"use_ssl"`
 
 	HTTPProxy   string   `mapstructure:"http_proxy"`
 	HTTPSProxy  string   `mapstructure:"https_proxy"`
@@ -202,12 +202,15 @@ func (p *Provisioner) copyOutput(o terraform.UIOutput, r io.Reader, doneCh chan<
 }
 
 func (p *Provisioner) runConverge(o terraform.UIOutput, comm communicator.Communicator) error {
-	cmd := p.buildCommandLine()
+	cmd, err := p.buildCommandLine()
+	if err != nil {
+		return err
+	}
 
 	return p.runCommand(o, comm, cmd)
 }
 
-func (p *Provisioner) buildCommandLine() string {
+func (p *Provisioner) buildCommandLine() (string, error) {
 	cmd := bytes.NewBufferString(fmt.Sprintf("%s/converge apply", binaryPath))
 
 	// An RPC address takes precedence over a local address
@@ -241,12 +244,18 @@ func (p *Provisioner) buildCommandLine() string {
 		}
 	}
 
-	for k, v := range p.Params {
-		cmd.WriteString(fmt.Sprintf(" -p %s=%s", k, strconv.Quote(v)))
+	if p.Params != nil {
+		params, err := json.Marshal(p.Params)
+		if err != nil {
+			return "", err
+		}
+		cmd.WriteString(" --paramsJSON='")
+		cmd.Write(params)
+		cmd.WriteString("'")
 	}
 
 	cmd.WriteString(" ")
 	cmd.WriteString(strings.Join(p.Hcl, " "))
 
-	return cmd.String()
+	return cmd.String(), nil
 }
