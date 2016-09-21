@@ -9,7 +9,6 @@ import (
 )
 
 const (
-	installURL = "https://bintray.com/chrisaubuchon/generic/download_file?file_path=converge"
 	binaryPath = "/usr/bin"
 )
 
@@ -29,7 +28,7 @@ func (p *Provisioner) installConvergeBinary(
 		prefix += fmt.Sprintf("no_proxy='%s' ", strings.Join(p.NOProxy, ","))
 	}
 
-	err := p.runCommand(o, comm, fmt.Sprintf("%scurl -L -o %s/converge %s", prefix, binaryPath, installURL))
+	err := p.runCommand(o, comm, fmt.Sprintf("%scurl -L -o %s/converge %s", prefix, binaryPath, p.downloadPath("linux")))
 	if err != nil {
 		return err
 	}

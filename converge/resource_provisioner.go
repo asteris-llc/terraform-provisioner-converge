@@ -16,6 +16,11 @@ import (
 	"github.com/mitchellh/mapstructure"
 )
 
+const (
+	baseURL        = "https://dl.bintray.com/chrisaubuchon/converge/%s/%s/converge"
+	defaultVersion = "latest"
+)
+
 type Provisioner struct {
 	Download  bool                   `mapstructure:"download_binary"`
 	CaFile    string                 `mapstructure:"ca_file"`
@@ -30,6 +35,7 @@ type Provisioner struct {
 	RpcAddr   string                 `mapstructure:"rpc_addr"`
 	RpcToken  string                 `mapstructure:"rpc_token"`
 	UseSsl    bool                   `mapstructure:"use_ssl"`
+	Version   string                 `mapstructure:"version"`
 
 	HTTPProxy   string   `mapstructure:"http_proxy"`
 	HTTPSProxy  string   `mapstructure:"https_proxy"`
@@ -53,6 +59,10 @@ func (r *ResourceProvisioner) Apply(
 
 	p.useSudo = !p.PreventSudo && s.Ephemeral.ConnInfo["user"] != "root"
 
+	if p.Version == "" {
+		p.Version = defaultVersion
+	}
+
 	// Get a new communicator
 	comm, err := communicator.New(s)
 	if err != nil {
@@ -70,6 +80,7 @@ func (r *ResourceProvisioner) Apply(
 	defer comm.Disconnect()
 
 	if p.Download {
+		o.Output("Installing converge...")
 		if err := p.installConvergeBinary(o, comm); err != nil {
 			return err
 		}
@@ -99,6 +110,9 @@ func (r *ResourceProvisioner) Validate(c *terraform.ResourceConfig) (ws []string
 
 func (r *ResourceProvisioner) decodeConfig(c *terraform.ResourceConfig) (*Provisioner, error) {
 	p := new(Provisioner)
+
+	// Set plugin defaults here
+	p.Download = true
 
 	decConf := &mapstructure.DecoderConfig{
 		ErrorUnused:      true,
@@ -258,4 +272,8 @@ func (p *Provisioner) buildCommandLine() (string, error) {
 	cmd.WriteString(strings.Join(p.Hcl, " "))
 
 	return cmd.String(), nil
+}
+
+func (p *Provisioner) downloadPath(arch string) string {
+	return fmt.Sprintf(baseURL, p.Version, arch)
 }
