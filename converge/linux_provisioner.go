@@ -28,14 +28,15 @@ func (p *Provisioner) installConvergeBinary(
 		prefix += fmt.Sprintf("no_proxy='%s' ", strings.Join(p.NOProxy, ","))
 	}
 
-	err := p.runCommand(o, comm, fmt.Sprintf("%scurl -L -o %s/converge %s", prefix, binaryPath, p.downloadPath("linux")))
+	err := p.runCommand(o, comm, fmt.Sprintf("%scurl -LO %s", prefix, installURL))
 	if err != nil {
 		return err
 	}
 
-	if err := p.runCommand(o, comm, "chmod 0755 /usr/bin/converge"); err != nil {
+	err = p.runCommand(o, comm, fmt.Sprintf("%ssh ./install.sh -v %q", prefix, p.Version))
+	if err != nil {
 		return err
 	}
 
-	return nil
+	return p.runCommand(o, comm, fmt.Sprintf("%srm -f install.sh", prefix))
 }

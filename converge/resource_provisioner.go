@@ -17,7 +17,7 @@ import (
 )
 
 const (
-	baseURL        = "https://dl.bintray.com/chrisaubuchon/converge/%s/%s/converge"
+	installURL     = "https://dl.bintray.com/chrisaubuchon/converge/install.sh"
 	defaultVersion = "latest"
 )
 
@@ -272,8 +272,4 @@ func (p *Provisioner) buildCommandLine() (string, error) {
 	cmd.WriteString(strings.Join(p.Hcl, " "))
 
 	return cmd.String(), nil
-}
-
-func (p *Provisioner) downloadPath(arch string) string {
-	return fmt.Sprintf(baseURL, p.Version, arch)
 }
