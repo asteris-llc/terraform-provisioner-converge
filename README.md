@@ -9,6 +9,23 @@ $ make vendor
 $ make
 ```
 
+## Options
+
+* `hcl` (required) - A list of files to run through Converge. Can be a single path as a string
+* `ca_file` (optional) - Path to a CA certificate to trust. Requires `use_ssl`
+* `cert_file` (optional) - Path to a certificate file for SSL. Requires `use_ssl`
+* `download_binary` (optional) - Install Converge binary. Default to `false`
+* `key_file` (optional) - Path to a key file for SSL. Requires `use_ssl`
+* `local` (optional) - Run Converge in local mode. Defaults to `true`
+* `local_addr` (optional) - Address to use for local RPC connection
+* `log_level` (optional) - Logging level. One of `DEBUG`, `INFO`, `WARN`, `ERROR` or `FATAL`. Default is `INFO`
+* `no_token` (optional) - Don't use or generate an RPC token
+* `params` (optional) - A hash of parameter/value pairs to pass to Converge
+* `rpc_addr` (optional) - Address for server RPC connection. Overrides `local`
+* `rpc_token` (optional) - Token to use for RPC
+* `use_ssl` (optional) - Use SSL to connect
+* `version` (optional) - Specify the version of Converge. Default is the latest version.
+
 ## Example Usage
 
 ```
