@@ -2,6 +2,22 @@
 
 Terraform provisioner for Converge
 
+This plugin allows you to run converge directly in terraform.
+
+## Installing
+
+Download a binary from the [releases page](https://github.com/asteris-llc/terraform-provisioner-converge/releases).
+
+Then create a `.terraformrc` file in your home directory with the `converge` provisioner 
+pointing to the location of your downloaded binary.
+
+```hcl
+provisioners {
+  converge = "/usr/local/bin/terraform-provisioner-converge"
+}
+```
+
+
 ## Building
 
 ```shell
