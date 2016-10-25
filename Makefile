@@ -29,7 +29,8 @@ xcompile:
 	@rm -rf build/
 	@mkdir -p build
 	gox \
-		-os="darwin" \
+        -osarch="darwin/386" \
+        -osarch="darwin/amd64" \
 		-os="linux" \
 		-output="build/$(BINARY)_$(VERSION)_{{.OS}}_{{.Arch}}/$(BINARY)-{{.Dir}}" $$(glide nv)
 #		-os="freebsd" \

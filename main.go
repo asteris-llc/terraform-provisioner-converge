@@ -1,14 +1,14 @@
 package main
 
 import (
-	"github.com/ChrisAubuchon/terraform-provisioner-converge/converge"
+	"github.com/asteris-llc/terraform-provisioner-converge/converge"
 
 	"github.com/hashicorp/terraform/plugin"
 	"github.com/hashicorp/terraform/terraform"
 )
 
 const Name = "terraform-provisioner-converge"
-const Version = "0.1.0"
+const Version = "0.2.0-beta1"
 
 func main() {
 	plugin.Serve(&plugin.ServeOpts{
