@@ -17,7 +17,7 @@ import (
 )
 
 const (
-	installURL     = "https://dl.bintray.com/chrisaubuchon/converge/install.sh"
+	installURL     = "https://raw.githubusercontent.com/asteris-llc/converge/master/install-converge.sh"
 	defaultVersion = "latest"
 )
 
