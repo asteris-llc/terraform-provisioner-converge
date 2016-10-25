@@ -2,7 +2,7 @@
 
 Terraform provisioner for Converge
 
-This plugin allows you to run converge directly in terraform.
+This plugin allows you to run converge directly in terraform. 
 
 ## Installing
 
@@ -31,6 +31,8 @@ $ make
 * `ca_file` (optional) - Path to a CA certificate to trust. Requires `use_ssl`
 * `cert_file` (optional) - Path to a certificate file for SSL. Requires `use_ssl`
 * `download_binary` (optional) - Install Converge binary. Default to `false`
+* `install_dir` (optional) - Directory to install converge binary on the remote host. Default is `/usr/bin`
+* `binary_dir` (optional) - Location of the converge binary on the remote host. Default is `/usr/bin`
 * `key_file` (optional) - Path to a key file for SSL. Requires `use_ssl`
 * `local` (optional) - Run Converge in local mode. Defaults to `true`
 * `local_addr` (optional) - Address to use for local RPC connection

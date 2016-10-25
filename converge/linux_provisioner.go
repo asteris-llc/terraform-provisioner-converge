@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	binaryPath = "/usr/bin"
+	binaryDir = "/usr/bin"
 )
 
 func (p *Provisioner) installConvergeBinary(
@@ -33,10 +33,10 @@ func (p *Provisioner) installConvergeBinary(
 		return err
 	}
 
-	err = p.runCommand(o, comm, fmt.Sprintf("%ssh ./install.sh -v %q", prefix, p.Version))
+	err = p.runCommand(o, comm, fmt.Sprintf("%ssh ./install-converge.sh -v %q -d %q", prefix, p.Version, p.InstallDir))
 	if err != nil {
 		return err
 	}
 
-	return p.runCommand(o, comm, fmt.Sprintf("%srm -f install.sh", prefix))
+	return p.runCommand(o, comm, fmt.Sprintf("%srm -f install-converge.sh", prefix))
 }

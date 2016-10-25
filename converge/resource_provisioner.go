@@ -17,25 +17,28 @@ import (
 )
 
 const (
-	installURL     = "https://raw.githubusercontent.com/asteris-llc/converge/master/install-converge.sh"
-	defaultVersion = "latest"
+	installURL        = "https://raw.githubusercontent.com/asteris-llc/converge/master/install-converge.sh"
+	defaultInstallDir = binaryDir
+	defaultVersion    = "0.3.0-beta2"
 )
 
 type Provisioner struct {
-	Download  bool                   `mapstructure:"download_binary"`
-	CaFile    string                 `mapstructure:"ca_file"`
-	CertFile  string                 `mapstructure:"cert_file"`
-	KeyFile   string                 `mapstructure:"key_file"`
-	Local     bool                   `mapstructure:"local"`
-	LocalAddr string                 `mapstructure:"local_addr"`
-	LogLevel  string                 `mapstructure:"log_level"`
-	Hcl       []string               `mapstructure:"hcl"`
-	NoToken   bool                   `mapstructure:"no_token"`
-	Params    map[string]interface{} `mapstructure:"params"`
-	RpcAddr   string                 `mapstructure:"rpc_addr"`
-	RpcToken  string                 `mapstructure:"rpc_token"`
-	UseSsl    bool                   `mapstructure:"use_ssl"`
-	Version   string                 `mapstructure:"version"`
+	Download   bool                   `mapstructure:"download_binary"`
+	CaFile     string                 `mapstructure:"ca_file"`
+	CertFile   string                 `mapstructure:"cert_file"`
+	KeyFile    string                 `mapstructure:"key_file"`
+	Local      bool                   `mapstructure:"local"`
+	LocalAddr  string                 `mapstructure:"local_addr"`
+	LogLevel   string                 `mapstructure:"log_level"`
+	Hcl        []string               `mapstructure:"hcl"`
+	NoToken    bool                   `mapstructure:"no_token"`
+	Params     map[string]interface{} `mapstructure:"params"`
+	RpcAddr    string                 `mapstructure:"rpc_addr"`
+	RpcToken   string                 `mapstructure:"rpc_token"`
+	UseSsl     bool                   `mapstructure:"use_ssl"`
+	Version    string                 `mapstructure:"version"`
+	BinaryDir  string                 `mapstructure:"binary_dir"`
+	InstallDir string                 `mapstructure:"install_dir"`
 
 	HTTPProxy   string   `mapstructure:"http_proxy"`
 	HTTPSProxy  string   `mapstructure:"https_proxy"`
@@ -63,6 +66,13 @@ func (r *ResourceProvisioner) Apply(
 		p.Version = defaultVersion
 	}
 
+	if p.BinaryDir == "" {
+		p.BinaryDir = binaryDir
+	}
+
+	if p.InstallDir == "" {
+		p.InstallDir = defaultInstallDir
+	}
 	// Get a new communicator
 	comm, err := communicator.New(s)
 	if err != nil {
@@ -225,7 +235,7 @@ func (p *Provisioner) runConverge(o terraform.UIOutput, comm communicator.Commun
 }
 
 func (p *Provisioner) buildCommandLine() (string, error) {
-	cmd := bytes.NewBufferString(fmt.Sprintf("%s/converge apply", binaryPath))
+	cmd := bytes.NewBufferString(fmt.Sprintf("%s/converge apply", p.BinaryDir))
 
 	// An RPC address takes precedence over a local address
 	if p.RpcAddr != "" {
