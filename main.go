@@ -8,7 +8,7 @@ import (
 )
 
 const Name = "terraform-provisioner-converge"
-const Version = "0.2.0-beta1"
+const Version = "0.2.0-rc1"
 
 func main() {
 	plugin.Serve(&plugin.ServeOpts{
