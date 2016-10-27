@@ -19,7 +19,7 @@ import (
 const (
 	installURL        = "https://raw.githubusercontent.com/asteris-llc/converge/master/install-converge.sh"
 	defaultInstallDir = binaryDir
-	defaultVersion    = "0.3.0-rc1"
+	defaultVersion    = "0.3.0"
 )
 
 type Provisioner struct {
