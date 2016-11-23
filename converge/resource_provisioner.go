@@ -17,7 +17,7 @@ import (
 )
 
 const (
-	installURL        = "http://get.converge.sh"
+	installURL        = "https://get.converge.sh"
 	defaultInstallDir = binaryDir
 	defaultVersion    = "0.4.0"
 )
