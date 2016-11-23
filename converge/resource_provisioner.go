@@ -17,9 +17,7 @@ import (
 )
 
 const (
-	installURL        = "https://raw.githubusercontent.com/asteris-llc/converge/master/install-converge.sh"
-	defaultInstallDir = binaryDir
-	defaultVersion    = "0.4.0"
+	installURL = "https://get.converge.sh"
 )
 
 type Provisioner struct {
@@ -62,17 +60,10 @@ func (r *ResourceProvisioner) Apply(
 
 	p.useSudo = !p.PreventSudo && s.Ephemeral.ConnInfo["user"] != "root"
 
-	if p.Version == "" {
-		p.Version = defaultVersion
-	}
-
 	if p.BinaryDir == "" {
 		p.BinaryDir = binaryDir
 	}
 
-	if p.InstallDir == "" {
-		p.InstallDir = defaultInstallDir
-	}
 	// Get a new communicator
 	comm, err := communicator.New(s)
 	if err != nil {
