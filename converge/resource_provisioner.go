@@ -17,9 +17,7 @@ import (
 )
 
 const (
-	installURL        = "https://get.converge.sh"
-	defaultInstallDir = binaryDir
-	defaultVersion    = "0.4.0"
+	installURL = "https://get.converge.sh"
 )
 
 type Provisioner struct {
