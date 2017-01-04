@@ -1,5 +1,5 @@
-hash: 3b7a12000c3cd644bcb567b58310b1edaa1ef49ee2bde644f6f5a59fe92f3a69
-updated: 2016-09-06T15:49:35.895196749-05:00
+hash: 23c5c15e8f3d686b2f7c7151c8c90048270cc646c3a7adacc6edda719217e3e3
+updated: 2017-01-03T15:44:48.39304458-06:00
 imports:
 - name: github.com/apparentlymart/go-cidr
   version: a3ebdb999b831ecb6ab8a226e31b07b2b9061c47
@@ -40,15 +40,15 @@ imports:
 - name: github.com/dylanmei/winrmtest
   version: 025617847eb2cf9bd1d851bc3b22ed28e6245ce5
 - name: github.com/go-ini/ini
-  version: 6e4869b434bd001f6983749881c7ead3545887d8
+  version: afbd495e5aaea13597b5e14fe514ddeaa4d76fc3
 - name: github.com/hashicorp/errwrap
   version: 7554cd9344cec97297fa6649b055a8c98c2a1e55
 - name: github.com/hashicorp/go-getter
-  version: 0eb633db32e432fabba9eca8fa21192fab2b96be
+  version: 2fbd997432e72fe36060c8f07ec1eaf98d098177
   subpackages:
   - helper/url
 - name: github.com/hashicorp/go-multierror
-  version: 8c5f0ad9360406a3807ce7de6bc73269a91a6e51
+  version: d30f09973e19c1dfcd120b2d9c4f168e68d6b5d5
 - name: github.com/hashicorp/go-plugin
   version: 8cf118f7a2f0c7ef1c82f66d4f6ac77c7e27dc12
 - name: github.com/hashicorp/go-uuid
@@ -56,7 +56,7 @@ imports:
 - name: github.com/hashicorp/go-version
   version: deeb027c13a95d56c7585df3fe29207208c6706e
 - name: github.com/hashicorp/hcl
-  version: 99df0eb941dd8ddbc83d3f3605a34f6a686ac85e
+  version: 6f5bfed9a0a22222fbe4e731ae3481730ba41e93
   subpackages:
   - hcl/ast
   - hcl/parser
@@ -71,25 +71,26 @@ imports:
   subpackages:
   - ast
 - name: github.com/hashicorp/terraform
-  version: e822a79165dbc06bbf8271ee349fe256867d53dc
+  version: dd2c6da4f6226b5ccd0601a15bba197fc223b1ec
   subpackages:
   - communicator
   - communicator/remote
+  - communicator/shared
   - communicator/ssh
   - communicator/winrm
   - config
   - config/module
   - dag
-  - dot
   - flatmap
+  - helper/experiment
   - helper/hilmapstructure
-  - helper/pathorcontents
+  - helper/shadow
   - plugin
   - terraform
 - name: github.com/hashicorp/yamux
   version: d1caa6c97c9fc1cc9e83bbe34d0603f9ff0ce8bd
 - name: github.com/jmespath/go-jmespath
-  version: bd40a432e4c76585ef6b72d3fd96fb9b6dc7b68d
+  version: c01cf91b011868172fdcd9f41838e80c9d716264
 - name: github.com/masterzen/simplexml
   version: 4572e39b1ab9fe03ee513ce6fc7e289e98482190
   subpackages:
@@ -104,11 +105,11 @@ imports:
 - name: github.com/mitchellh/copystructure
   version: 6871c41ca9148d368715dedcda473f396f205df5
 - name: github.com/mitchellh/go-homedir
-  version: 756f7b183b7ab78acdbbee5c7f392838ed459dda
+  version: b8bc1bf767474819792c23f32d8286a45736f1c6
 - name: github.com/mitchellh/go-linereader
   version: 07bab5fdd9580500aea6ada0e09df4aa28e68abd
 - name: github.com/mitchellh/mapstructure
-  version: ca63d7c062ee3c9f34db231e352b60012b4fd0c1
+  version: d2dd0262208475919e1a362f675cfc0e7c10e905
 - name: github.com/mitchellh/packer
   version: 42144640658ded0e55be62984642750ffc4978db
   subpackages:
@@ -126,11 +127,21 @@ imports:
 - name: github.com/xanzy/ssh-agent
   version: ba9c9e33906f58169366275e3450db66139a31a9
 - name: golang.org/x/crypto
-  version: 9e590154d2353f3f5e1b24da7275686040dcf491
+  version: 1f22c0103821b9390939b6776727195525381532
   subpackages:
   - curve25519
-  - ed25519
-  - ed25519/internal/edwards25519
   - ssh
   - ssh/agent
-testImports: []
+testImports:
+- name: github.com/davecgh/go-spew
+  version: 5215b55f46b2b919f50a1df0eaa5886afe4e3b3d
+  subpackages:
+  - spew
+- name: github.com/pmezard/go-difflib
+  version: d8ed2627bdf02c080bf22230dbb337003b7aba2d
+  subpackages:
+  - difflib
+- name: github.com/stretchr/testify
+  version: c5d7a69bf8a2c9c374798160849c071093e41dd1
+  subpackages:
+  - assert
