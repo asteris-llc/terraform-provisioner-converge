@@ -1,0 +1,7 @@
+build:
+  binary: terraform-provisioner-converge
+  goos:
+    - darwin
+    - linux
+  goarch:
+    - amd64
