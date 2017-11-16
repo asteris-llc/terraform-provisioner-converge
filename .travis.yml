@@ -1,0 +1,8 @@
+language: go
+go:
+  - 1.8.x
+install:
+  - go get -u github.com/golang/dep/cmd/dep
+  - dep ensure -vendor-only
+script: go test $(go list ./... 2>/dev/null | grep -v /vendor/)
+after_success: test -n "$TRAVIS_TAG" && curl -s https://raw.githubusercontent.com/goreleaser/get/master/latest | bash

@@ -109,6 +109,10 @@ func (r *ResourceProvisioner) Validate(c *terraform.ResourceConfig) (ws []string
 	return ws, es
 }
 
+func (r *ResourceProvisioner) Stop() error {
+	return nil
+}
+
 func (r *ResourceProvisioner) decodeConfig(c *terraform.ResourceConfig) (*Provisioner, error) {
 	p := new(Provisioner)
 
@@ -264,6 +268,7 @@ func (p *Provisioner) buildCommandLine() (string, error) {
 		if err != nil {
 			return "", err
 		}
+		params = bytes.Replace(params, []byte(`'`), []byte(`'\''`), -1)
 		cmd.WriteString(" --paramsJSON='")
 		cmd.Write(params)
 		cmd.WriteString("'")
