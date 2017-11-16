@@ -268,6 +268,7 @@ func (p *Provisioner) buildCommandLine() (string, error) {
 		if err != nil {
 			return "", err
 		}
+		params = bytes.Replace(params, []byte(`'`), []byte(`'\''`), -1)
 		cmd.WriteString(" --paramsJSON='")
 		cmd.Write(params)
 		cmd.WriteString("'")
